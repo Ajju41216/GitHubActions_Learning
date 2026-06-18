@@ -32,3 +32,9 @@ jobs:   #---highest structure to design workflow or pipeline in github as cpmapr
         run: |                             # | ----> used to add multiple scripts
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Check the Code in Repo
+        run: |
+          echo "Checking Code in the Repository"
+          pwd
+          
