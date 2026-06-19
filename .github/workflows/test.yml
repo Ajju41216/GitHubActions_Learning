@@ -4,12 +4,10 @@ name: DevOps_Insiders_Infra   # Name of the Workflow
 
 # Controls when the workflow will run
 on:
-  delete
-                    # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #   branches:
-  #     - "main"
-  #     - featureBranch
+  # delete                 # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches:
+      - "main"
   # pull_request:
   #   branches:
   #     - main 
@@ -20,7 +18,7 @@ jobs:   #---highest structure to design workflow or pipeline in github as cpmapr
 
   build:
    
-    runs-on: ubuntu-latest  # Runners like Agents in ADO  = GitHub Servers
+    runs-on: Runners  # Runners like Agents in ADO  = GitHub Servers
 
     steps:
      # - task: in ADO 
