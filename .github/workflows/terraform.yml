@@ -1,0 +1,63 @@
+name: 'Terraform Azure Deploy'
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    # Use 'ubuntu-latest' or uncomment the block below to use your self-hosted runner
+    runs-on: ubuntu-latest
+    # runs-on:
+    #   - self-hosted
+    #   - Linux
+    #   - X64
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_USE_OIDC: true
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.9.0 # Use a stable Terraform version
+
+    - name: Terraform Format Check
+      id: fmt
+      run: terraform fmt -check
+      working-directory: ./terraform_infra
+      continue-on-error: true # Don't fail the build on formatting errors, but we check it
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      working-directory: ./terraform_infra
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+      working-directory: ./terraform_infra
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      working-directory: ./terraform_infra
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -no-color
+      working-directory: ./terraform_infra
