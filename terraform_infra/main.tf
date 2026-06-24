@@ -25,15 +25,15 @@ resource "azurerm_resource_group" "rg1" {
   location = "Central India"
 }
 
-# resource "azurerm_storage_account" "stgAcc" {
-#   depends_on = [ azurerm_resource_group.rg1 ]
-#   name                     = "messy007devinfra"
-#   resource_group_name      = "rg-dhondhu"
-#   location                 = "Central India"
-#   account_tier             = "Standard"
-#   account_replication_type = "LRS"
+resource "azurerm_storage_account" "stgAcc" {
+  depends_on = [ azurerm_resource_group.rg1 ]
+  name                     = "messy007d456evinfra"
+  resource_group_name      = "rg-dhondhu"
+  location                 = "Central India"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 
-#   tags = {
-#     environment = "dev"
-#   }
-# }
+  tags = {
+    environment = "dev"
+  }
+}
